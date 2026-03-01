@@ -65,14 +65,14 @@
 
 ## Checklist
 
-- [ ] Repositório criado e clonado localmente
-- [ ] Estrutura de diretórios criada
-- [ ] `.env` configurado com a Gemini API key
-- [ ] `docker compose up` sobe backend e frontend sem erros
-- [ ] `GET /health` retorna `{"status": "ok", "database": "ok"}`
-- [ ] `GET /docs` exibe o Swagger UI gerado pelo FastAPI
-- [ ] Frontend abre no browser sem erros no console
-- [ ] Primeiro push no GitHub dispara o CI e passa
+- [x] Repositório criado e clonado localmente
+- [x] Estrutura de diretórios criada
+- [x] `.env` configurado com a Gemini API key
+- [x] `docker compose up` sobe backend e frontend sem erros
+- [x] `GET /health` retorna `{"status": "ok", "database": "ok"}`
+- [x] `GET /docs` exibe o Swagger UI gerado pelo FastAPI
+- [x] Frontend abre no browser sem erros no console
+- [x] Primeiro push no GitHub dispara o CI e passa
 
 ---
 
