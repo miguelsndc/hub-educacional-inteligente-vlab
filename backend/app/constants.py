@@ -1,9 +1,11 @@
 from enum import Enum
 
+
 class AIProvider(str, Enum):
     GEMINI = "gemini"
     ANTHROPIC = "anthropic"
     MOCK = "mock"
+
 
 PAGINATION_DEFAULT_LIMIT = 10
 PAGINATION_MAX_LIMIT = 100

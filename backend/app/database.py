@@ -3,6 +3,7 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from pydantic_settings import BaseSettings
 from app.constants import AIProvider, AI_DEFAULT_PROVIDER, AI_DEFAULT_TIMEOUT
 
+
 class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./app.db"
     AI_PROVIDER: AIProvider = AI_DEFAULT_PROVIDER
@@ -17,7 +18,8 @@ class Settings(BaseSettings):
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.CORS_ORIGINS.split(",")]
-    
+
+
 settings = Settings()
 
 connection_args = (
@@ -27,8 +29,10 @@ connection_args = (
 engine = create_engine(settings.DATABASE_URL, connect_args=connection_args)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 class Base(DeclarativeBase):
     pass
+
 
 def get_db():
     db = SessionLocal()
