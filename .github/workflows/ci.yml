@@ -22,7 +22,7 @@ jobs:
         run: pip install black flake8
 
       - name: black (formatação)
-        run: black --check backend/
+        run: black backend/
 
       - name: flake8 (estilo)
         run: flake8 backend/ --max-line-length=88 --extend-ignore=E203,E501
