@@ -1,6 +1,5 @@
 from sqlalchemy import Column, ForeignKey, String, Table
-from sqlalchemy.orm import relationship, Mapped, mapped_column
-
+from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base
 
 # table de junção pro many-to-many entre Resource e Tag

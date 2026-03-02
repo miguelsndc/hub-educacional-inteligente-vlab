@@ -33,7 +33,7 @@ class GeminiProvider:
             data = json.loads(raw)
         except json.JSONDecodeError:
             logger.error(
-                f"Failed to parse Gemini response as JSON", extra={"ctx_raw": raw}
+                "Failed to parse Gemini response as JSON", extra={"ctx_raw": raw}
             )
             return AIResponseParseError(raw)
 

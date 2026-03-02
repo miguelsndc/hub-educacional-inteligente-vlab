@@ -5,7 +5,6 @@ from app.constants import PAGINATION_MAX_LIMIT
 from app.exceptions import ResourceNotFoundError
 from app.models.resource import Resource
 from app.schemas.resource import ResourceCreate, ResourceResponse, ResourceUpdate
-from app.models.tag import Tag
 from app.schemas.common import PaginatedResponse
 
 
