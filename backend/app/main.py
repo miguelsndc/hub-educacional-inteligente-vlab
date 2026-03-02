@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 
 from app.database import settings, engine, Base
 from app.exceptions import ResourceNotFoundError, AIProviderError
-from app.routers import health
+from app.routers import health, ai, resources
 from app.logger import get_logger
 
 logger = get_logger("app.main")
@@ -38,6 +38,8 @@ async def ai_error_handler(request: Request, exc: AIProviderError):
 
 
 app.include_router(health.router)
+app.include_router(resources.router)
+app.include_router(ai.router)
 
 
 logger.info(
