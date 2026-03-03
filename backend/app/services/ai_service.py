@@ -23,8 +23,7 @@ def suggest(request: AIRequest, db: Session) -> AIResponse:
 
     user_msg = {
         f"Título: {request.title}\n",
-        f"Descrição: {request.description}\n",
         f"Tags existentes: {', '.join(existing_tags) if existing_tags else 'Nenhuma'}\n",
     }
 
-    return provider.suggest(prompt=prompt, user_message=user_msg)
+    return provider.suggest(prompt=prompt, user_message=user_msg, title=request.title)
