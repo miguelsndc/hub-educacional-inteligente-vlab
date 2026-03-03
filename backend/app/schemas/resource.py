@@ -56,12 +56,12 @@ class ResourceResponse(BaseModel):
     type: str
     description: str | None
     url: str | None
-    tags: list[str]
+    tags: list
     created_at: datetime
     updated_at: datetime
 
     @field_serializer("tags")
-    def serialize_tags(cls, value: list[Tag]):
-        return [tag.name for tag in value]
+    def serialize_tags(self, value: list) -> list[str]:
+        return [tag.name if isinstance(tag, Tag) else tag for tag in value]
 
     model_config = {"from_attributes": True}
