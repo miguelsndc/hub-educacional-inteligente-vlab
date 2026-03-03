@@ -1,6 +1,7 @@
 import { useState, type KeyboardEvent } from "react"
 import { FormField, Input } from "./Input";
 import { Warning } from "./Warning";
+import { Chip } from "./Chip";
 
 interface Props {
     tags: string[]
@@ -48,19 +49,7 @@ export function TagInput({ tags, onChange }: Props) {
         <FormField label="Tags" for="tag-input">
             <div className="flex flex-wrap gap-2 mb-3">
                 {tags.map((tag) => (
-                    <span
-                        key={tag}
-                        className="flex items-center gap-1 bg-indigo-100 text-indigo-700 text-sm px-2 py-1 rounded-full"
-                    >
-                        {tag}
-                        <button
-                            type="button"
-                            onClick={() => handleTagRemove(tag)}
-                            className="hover:text-red-500 leading-none cursor-pointer"
-                        >
-                            <span>×</span>
-                        </button>
-                    </span>
+                    <Chip key={tag} tag={tag} handleTagRemove={handleTagRemove} />
                 ))}
             </div>
 
