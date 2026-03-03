@@ -1,11 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ResourceForm } from "../components/ResourceForm";
 import { getResource } from "../services/resource";
 
 export function FormPage() {
     const { id } = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const isEditing = !!id;
+    const from = location.state?.from ?? "/";
 
     const { data, isLoading } = useQuery({
         queryKey: ["resource", id],
@@ -13,13 +17,17 @@ export function FormPage() {
         enabled: isEditing,
     });
 
+    function handleFormSuccess() {
+        navigate(from);
+    }
+
     if (isEditing && isLoading) {
         return <p className="text-center text-gray-400 py-12">Carregando...</p>;
     }
 
     return (
         <div className="max-w-2xl mx-auto px-4 py-8">
-            <ResourceForm initial={isEditing ? data : undefined} />
+            <ResourceForm initial={isEditing ? data : undefined} onSuccess={handleFormSuccess} />
         </div>
     );
 }

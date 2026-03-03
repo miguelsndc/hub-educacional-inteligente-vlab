@@ -11,9 +11,10 @@ const RESOURCE_TYPES = ["video", "pdf", "link"];
 
 interface Props {
     initial?: Resource;
+    onSuccess?: () => void;
 }
 
-export function ResourceForm({ initial }: Props) {
+export function ResourceForm({ initial, onSuccess }: Props) {
     const navigate = useNavigate();
     const createMutation = useCreateResource();
     const updateMutation = useUpdateResource(initial?.id ?? 0);
@@ -60,7 +61,7 @@ export function ResourceForm({ initial }: Props) {
             } else {
                 await createMutation.mutateAsync(payload);
             }
-            navigate("/");
+            onSuccess?.();
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setError(err.message);

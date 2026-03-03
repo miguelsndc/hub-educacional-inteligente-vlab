@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDeleteResource } from "../hooks/useMutateResource";
 import type { Resource } from "../services/resource";
 import { ConfirmModal } from "./ConfirmModal";
@@ -42,7 +42,11 @@ export function ResourceTable({ resources }: Props) {
                 <tbody>
                     {resources.map((resource) => (
                         <tr key={resource.id} className="border-b hover:bg-gray-50">
-                            <td className="py-3 pr-4 font-medium">{resource.title}</td>
+                            <td className="py-3 pr-4 font-medium">
+                                <Link to={`/resource/${resource.id}`} className="hover:underline">
+                                    {resource.title}
+                                </Link>
+                            </td>
                             <td className="py-3 pr-4 capitalize text-gray-600">
                                 {resource.type}
                             </td>
@@ -60,7 +64,7 @@ export function ResourceTable({ resources }: Props) {
                             </td>
                             <td className="py-3 text-right whitespace-nowrap">
                                 <button
-                                    onClick={() => navigate(`/edit/${resource.id}`)}
+                                    onClick={() => navigate(`/resource/edit/${resource.id}`)}
                                     className="text-indigo-600 hover:underline mr-4 text-sm"
                                 >
                                     Editar

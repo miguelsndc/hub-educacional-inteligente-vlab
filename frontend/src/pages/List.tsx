@@ -16,7 +16,7 @@ export function ListPage() {
                     📚 Recursos Educacionais
                 </h1>
                 <button
-                    onClick={() => navigate("/new")}
+                    onClick={() => navigate("/resource/new")}
                     className="px-4 py-2 bg-indigo-600 text-white text-sm rounded-md hover:bg-indigo-700"
                 >
                     + Novo recurso
