@@ -33,7 +33,7 @@ async def not_found_handler(request: Request, exc: ResourceNotFoundError):
 
 @app.exception_handler(AIProviderError)
 async def ai_error_handler(request: Request, exc: AIProviderError):
-    logger.warning("AI provider error", extra={"ctx_error": str(exc)})
+    logger.warning("Erro no Provedor de IA", extra={"ctx_error": str(exc)})
     return JSONResponse(status_code=502, content={"detail": str(exc)})
 
 
@@ -43,7 +43,7 @@ app.include_router(ai.router)
 
 
 logger.info(
-    "Application startup complete",
+    "Aplicação iniciada",
     extra={
         "ctx_environment": settings.ENVIRONMENT,
         "ctx_ai_provider": settings.AI_PROVIDER.value,

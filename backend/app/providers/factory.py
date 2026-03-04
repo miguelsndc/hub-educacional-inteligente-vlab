@@ -17,4 +17,4 @@ def get_provider(settings: Settings) -> AIProviderEnum:
 
             return MockProvider()
         case _:
-            raise ValueError(f"Unsupported AI provider: {settings.AI_PROVIDER}")
+            raise ValueError(f"Provedor de IA não suportado: {settings.AI_PROVIDER}")

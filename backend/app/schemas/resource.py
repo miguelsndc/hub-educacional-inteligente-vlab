@@ -15,16 +15,45 @@ class ResourceCreate(BaseModel):
 
     @field_validator("title")
     @classmethod
-    def validate_title(cls, value):
-        if not value.strip():
-            raise ValueError("Title cannot be empty")
+    def validate_title(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("O título não pode ser vazio.")
+        if len(value) > 255:
+            raise ValueError("O título não pode ter mais de 255 caracteres.")
+        return value
+
+    @field_validator("description")
+    @classmethod
+    def validate_description(cls, value: str | None) -> str | None:
+        if value and len(value) > 5000:
+            raise ValueError("A descrição não pode ter mais de 5000 caracteres.")
+        return value
+
+    @field_validator("url")
+    @classmethod
+    def validate_url(cls, value: str | None) -> str | None:
+        if value and len(value) > 2048:
+            raise ValueError("A URL não pode ter mais de 2048 caracteres.")
+        return value
+
+    @field_validator("tags")
+    @classmethod
+    def validate_tags(cls, value: list[str]) -> list[str]:
+        if len(value) > 10:
+            raise ValueError("Um recurso pode ter no máximo 10 tags.")
+        for tag in value:
+            if len(tag.strip()) > 50:
+                raise ValueError("Cada tag pode ter no máximo 50 caracteres.")
         return value
 
     @field_validator("type")
     @classmethod
-    def validate_type(cls, value):
+    def validate_type(cls, value: str) -> str:
         if value not in RESOURCE_TYPES:
-            raise ValueError(f"Type must be one of: {', '.join(RESOURCE_TYPES)}")
+            raise ValueError(
+                f"O tipo deve ser um dos seguintes: {', '.join(RESOURCE_TYPES)}."
+            )
         return value
 
 
@@ -37,16 +66,45 @@ class ResourceUpdate(BaseModel):
 
     @field_validator("title")
     @classmethod
-    def validate_title(cls, value):
-        if value is not None and not value.strip():
-            raise ValueError("Title cannot be empty")
+    def validate_title(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("O título não pode ser vazio.")
+        if len(value) > 255:
+            raise ValueError("O título não pode ter mais de 255 caracteres.")
+        return value
+
+    @field_validator("description")
+    @classmethod
+    def validate_description(cls, value: str | None) -> str | None:
+        if value and len(value) > 5000:
+            raise ValueError("A descrição não pode ter mais de 5000 caracteres.")
+        return value
+
+    @field_validator("url")
+    @classmethod
+    def validate_url(cls, value: str | None) -> str | None:
+        if value and len(value) > 2048:
+            raise ValueError("A URL não pode ter mais de 2048 caracteres.")
+        return value
+
+    @field_validator("tags")
+    @classmethod
+    def validate_tags(cls, value: list[str]) -> list[str]:
+        if len(value) > 10:
+            raise ValueError("Um recurso pode ter no máximo 10 tags.")
+        for tag in value:
+            if len(tag.strip()) > 50:
+                raise ValueError("Cada tag pode ter no máximo 50 caracteres.")
         return value
 
     @field_validator("type")
     @classmethod
-    def validate_type(cls, value):
-        if value is not None and value not in RESOURCE_TYPES:
-            raise ValueError(f"Type must be one of: {', '.join(RESOURCE_TYPES)}")
+    def validate_type(cls, value: str) -> str:
+        if value not in RESOURCE_TYPES:
+            raise ValueError(
+                f"O tipo deve ser um dos seguintes: {', '.join(RESOURCE_TYPES)}."
+            )
         return value
 
 

@@ -16,7 +16,7 @@ class Resource(Base):
         Enum(*RESOURCE_TYPES, name="resource_type"), nullable=False
     )
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
-    url: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    url: Mapped[str | None] = mapped_column(String(2048), nullable=True)
     # selectin carrega tags automaticamente junto dos recursos
     tags: Mapped[list[Tag]] = relationship(secondary=resource_tags, lazy="selectin")
 
