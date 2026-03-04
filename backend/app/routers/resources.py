@@ -8,7 +8,7 @@ from app.schemas.resource import (
 )
 from app.schemas.common import PaginatedResponse
 from app.services import resource_service
-from app.constants import PAGINATION_DEFAULT_LIMIT
+from app.constants import PaginationConfig
 
 router = APIRouter(prefix="/resources", tags=["Resources"])
 
@@ -16,7 +16,7 @@ router = APIRouter(prefix="/resources", tags=["Resources"])
 @router.get("", response_model=PaginatedResponse)
 def list_resources(
     page: int = Query(1, ge=1),
-    limit: int = Query(PAGINATION_DEFAULT_LIMIT, ge=1),
+    limit: int = Query(PaginationConfig.default_limit, ge=1),
     db: Session = Depends(get_db),
 ):
     return resource_service.get_all(db, page, limit)

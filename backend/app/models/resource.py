@@ -5,15 +5,15 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 from app.models.tag import resource_tags, Tag
-from app.constants import RESOURCE_TYPES
+from app.constants import ResourceTypeEnum
 
 
 class Resource(Base):
     __tablename__ = "resources"
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
-    type: Mapped[str] = mapped_column(
-        Enum(*RESOURCE_TYPES, name="resource_type"), nullable=False
+    type: Mapped[ResourceTypeEnum] = mapped_column(
+        Enum(ResourceTypeEnum), nullable=False
     )
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     url: Mapped[str | None] = mapped_column(String(2048), nullable=True)

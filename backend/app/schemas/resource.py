@@ -2,13 +2,13 @@ from datetime import datetime
 
 from pydantic import BaseModel, field_serializer, field_validator
 
-from app.constants import RESOURCE_TYPES
+from app.constants import ResourceTypeEnum
 from app.models.tag import Tag
 
 
 class ResourceCreate(BaseModel):
     title: str
-    type: str
+    type: ResourceTypeEnum
     description: str | None = None
     url: str | None = None
     tags: list[str] = []
@@ -47,19 +47,10 @@ class ResourceCreate(BaseModel):
                 raise ValueError("Cada tag pode ter no máximo 50 caracteres.")
         return value
 
-    @field_validator("type")
-    @classmethod
-    def validate_type(cls, value: str) -> str:
-        if value not in RESOURCE_TYPES:
-            raise ValueError(
-                f"O tipo deve ser um dos seguintes: {', '.join(RESOURCE_TYPES)}."
-            )
-        return value
-
 
 class ResourceUpdate(BaseModel):
     title: str | None = None
-    type: str | None = None
+    type: ResourceTypeEnum | None = None
     description: str | None = None
     url: str | None = None
     tags: list[str] | None = None
@@ -96,15 +87,6 @@ class ResourceUpdate(BaseModel):
         for tag in value:
             if len(tag.strip()) > 50:
                 raise ValueError("Cada tag pode ter no máximo 50 caracteres.")
-        return value
-
-    @field_validator("type")
-    @classmethod
-    def validate_type(cls, value: str) -> str:
-        if value not in RESOURCE_TYPES:
-            raise ValueError(
-                f"O tipo deve ser um dos seguintes: {', '.join(RESOURCE_TYPES)}."
-            )
         return value
 
 

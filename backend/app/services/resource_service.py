@@ -1,7 +1,7 @@
 from math import ceil
 from sqlalchemy.orm import Session
 
-from app.constants import PAGINATION_MAX_LIMIT
+from app.constants import PaginationConfig
 from app.exceptions import ResourceNotFoundError
 from app.models.resource import Resource
 from app.models.tag import Tag
@@ -25,7 +25,7 @@ def _resolve_tags(db: Session, tag_names: list[str]) -> list[Tag]:
 
 
 def get_all(db: Session, page: int, limit: int) -> PaginatedResponse:
-    limit = min(limit, PAGINATION_MAX_LIMIT)
+    limit = min(limit, PaginationConfig.max_limit)
     offset = (page - 1) * limit
     total = db.query(Resource).count()
     resources = db.query(Resource).offset(offset).limit(limit).all()
@@ -42,10 +42,12 @@ def _get_by_id(db: Session, id: int) -> Resource:
     resource = db.query(Resource).filter(Resource.id == id).first()
     if not resource:
         raise ResourceNotFoundError(id)
-    return resource  
+    return resource
+
 
 def get_by_id(db: Session, id: int) -> ResourceResponse:
     return ResourceResponse.model_validate(_get_by_id(db, id))
+
 
 def create(db: Session, data: ResourceCreate) -> ResourceResponse:
     resource = Resource(

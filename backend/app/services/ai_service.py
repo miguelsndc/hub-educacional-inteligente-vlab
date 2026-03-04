@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from functools import lru_cache
 
 from app.models.tag import Tag
 from app.providers.factory import get_provider
@@ -6,6 +7,7 @@ from app.schemas.ai import AIResponse, AIRequest
 from app.settings import settings
 
 
+@lru_cache(maxsize=1)
 def _load_prompt() -> str:
     with open("app/prompts/pedagogical_assistant.txt", "r") as f:
         return f.read()
