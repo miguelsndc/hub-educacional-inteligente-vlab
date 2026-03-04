@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getResource } from "../services/resource";
 import { Chip } from "../components/Chip";
+import { useEffect } from "react";
 
 export function ResourcePage() {
     const { id } = useParams();
@@ -9,11 +10,18 @@ export function ResourcePage() {
     const location = useLocation();
     const isEditing = !!id;
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, isError } = useQuery({
         queryKey: ["resource", id],
         queryFn: () => getResource(Number(id)),
         enabled: isEditing,
+        retry: false
     });
+
+    useEffect(() => {
+        if (isError) {
+            navigate("/not-found");
+        }
+    }, [isError, navigate])
 
     if (isEditing && isLoading) {
         return <p className="text-center text-gray-400 py-12">Carregando...</p>;
@@ -57,7 +65,7 @@ export function ResourcePage() {
                 )}
                 <button
                     className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
-                    onClick={() => navigate(`/resource/edit/${id}`, {
+                    onClick={() => navigate(`/edit/${id}`, {
                         state: { from: location.pathname },
                     })}
                 >

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { ResourceForm } from "../components/ResourceForm";
 import { getResource } from "../services/resource";
+import { useEffect } from "react";
 
 export function FormPage() {
     const { id } = useParams();
@@ -9,14 +10,21 @@ export function FormPage() {
 
     const isEditing = !!id;
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, isError } = useQuery({
         queryKey: ["resource", id],
         queryFn: () => getResource(Number(id)),
         enabled: isEditing,
+        retry: false,
     });
 
+    useEffect(() => {
+        if (isError) {
+            navigate("/not-found");
+        }
+    }, [isError, navigate]);
+
     function handleFormSuccess(id: number) {
-        navigate(`/resource/${id}`);
+        navigate(`/${id}`);
     }
 
     if (isEditing && isLoading) {
