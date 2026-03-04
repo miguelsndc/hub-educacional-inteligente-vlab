@@ -77,7 +77,7 @@ export function ResourceForm({ initial, onSuccess }: Props) {
             <h1 className="text-5xl font-medium">{editing ? "Editar Recurso" : "Criar novo Recurso"}</h1>
             <p className="text-sm text-gray-500">Preencha os campos abaixo:</p>
             <FormField label="Título" for="title" required>
-                <Input name="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                <Input name="title" value={title} onChange={(e) => setTitle(e.target.value)} required maxLength={255} />
             </FormField>
 
             <TagInput tags={tags} onChange={handleTagChange} />
@@ -117,12 +117,13 @@ export function ResourceForm({ initial, onSuccess }: Props) {
                     value={description ?? ""}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={4}
+                    maxLength={5000}
                     className="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
             </FormField>
 
             <FormField label="Url" for="url">
-                <Input type="url" name="url" value={url ?? ""} onChange={(e) => setUrl(e.target.value)} placeholder="https://exemplo.com" />
+                <Input type="url" name="url" value={url ?? ""} onChange={(e) => setUrl(e.target.value)} placeholder="https://exemplo.com" maxLength={2048} />
             </FormField>
 
 

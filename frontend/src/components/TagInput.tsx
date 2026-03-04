@@ -19,14 +19,27 @@ export function TagInput({ tags, onChange }: Props) {
 
     function addTag() {
         setWarning(null);
+
+        if (tags.length >= 10) {
+            setWarning("Limite de 10 tags atingido.");
+            return;
+        }
+
         const normalized = normalize(input);
+
         if (normalized === "") return;
+
+        if (normalized.length > 50) {
+            setWarning("Uma tag pode ter no máximo 50 caracteres.");
+            return;
+        }
+
         if (tags.includes(normalized)) {
             setWarning("Esta tag já foi adicionada.");
             return;
         }
-        const newTags = [...tags, normalized];
-        onChange?.(newTags);
+
+        onChange?.([...tags, normalized]);
         setInput("");
     }
 
