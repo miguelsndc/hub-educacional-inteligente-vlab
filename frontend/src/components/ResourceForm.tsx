@@ -11,7 +11,7 @@ const RESOURCE_TYPES = ["video", "pdf", "link"];
 
 interface Props {
     initial?: Resource;
-    onSuccess?: () => void;
+    onSuccess?: (id: number) => void;
 }
 
 export function ResourceForm({ initial, onSuccess }: Props) {
@@ -55,13 +55,14 @@ export function ResourceForm({ initial, onSuccess }: Props) {
         setError(null);
         const payload: ResourcePayload = { title, description, type, url, tags };
 
+        let newResource: Resource;
         try {
             if (editing) {
-                await updateMutation.mutateAsync(payload);
+                newResource = await updateMutation.mutateAsync(payload);
             } else {
-                await createMutation.mutateAsync(payload);
+                newResource = await createMutation.mutateAsync(payload);
             }
-            onSuccess?.();
+            onSuccess?.(newResource.id);
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setError(err.message);
